@@ -25,7 +25,7 @@ namespace TrackPrintScreen
             {
                 path += "\\";
             }
-            path += now.ToString("MM dd yy HH-mm-ss");
+            path += now.ToString("yy-MM-dd HH-mm-ss");
             if (special) path = path + "  1  ";
             path += ".jpg";
 
