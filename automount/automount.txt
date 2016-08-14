@@ -1,0 +1,3 @@
+select vdisk file="G:\TrackingPrintScreens\partition.vhd"
+attach vdisk
+assign letter=K

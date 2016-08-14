@@ -30,12 +30,17 @@ namespace TrackPrintScreen
         public MainWindow()
         {
             InitializeComponent();
-            
+            WindowState = WindowState.Minimized;
+            Hide();
+
             if (!System.IO.File.Exists(configPath))
             {
                 System.IO.File.WriteAllText(configPath, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath));
             }
             options = OptionsFiledatabase.Load(configPath);
+
+            while (!System.IO.Directory.Exists(options.FolderPath) && revertToThisFolderDialog() == false) ;
+
             if (!System.IO.Directory.Exists(options.FolderPath))
             {
                 System.IO.File.WriteAllText(configPath, System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath));
@@ -43,8 +48,6 @@ namespace TrackPrintScreen
             }
             screenshotter = new Screenshotter(options);
 
-            WindowState = WindowState.Minimized;
-            Hide();
 
 
             // Initialize Tray Icon
@@ -145,6 +148,30 @@ namespace TrackPrintScreen
                 }
             }
             return -1;
+        }
+
+        private bool revertToThisFolderDialog()
+        {
+            string sMessageBoxText = "Couldn't save the picture in the setting's folder. Want to revert to default?";
+            string sCaption = "Screenshotter";
+
+            MessageBoxButton btnMessageBox = MessageBoxButton.YesNoCancel;
+            MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+
+            MessageBoxResult rsltMessageBox = System.Windows.MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+
+            switch (rsltMessageBox)
+            {
+                case MessageBoxResult.Yes:
+                    return true;
+                case MessageBoxResult.No:
+                    return false;
+                case MessageBoxResult.Cancel:
+                    Environment.Exit(0);
+                    break;
+            }
+
+            return false;
         }
     }
 }
