@@ -66,7 +66,7 @@ namespace TrackPrintScreen
             
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 2, 30);
+            dispatcherTimer.Interval = new TimeSpan(0, 1, 0);
             dispatcherTimer.Start();
 
             screenshotter.Shot(); // initial shot at the start of the application
